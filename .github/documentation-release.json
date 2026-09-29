@@ -4,7 +4,7 @@
     {
       "name": "@stackline/remark-mdx",
       "path": "readme.md",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "baselineVersion": "1.0.0",
       "keywords": [
         "stackline",
@@ -26,8 +26,8 @@
       "homepage": "https://alexandro.net/docs/vanilla/remark-mdx/",
       "baselineTarball": "https://registry.npmjs.org/@stackline/remark-mdx/-/remark-mdx-1.0.0.tgz",
       "baselineIntegrity": "sha512-3ipQ3zjy6F4KBwC8KCjXwmhh0Uitmoc+pbVTJ+yryAu18iKAfG1hw0LZjS1b6q73lE87f66vkPB2+AljTgcagg==",
-      "expectedSha512": "4251db472003548886fe097843d0ce029f025477e6584df00343fab801d6feb57d9d22443bbabbd1ead480caa686539642cc79ef51a31e04dd3eb21dc8eed612",
-      "tag": "docs-stackline-remark-mdx-v1.0.1"
+      "expectedSha512": "fe4aa672bbf367f1a1059bd91182b9a04739039eb332b30cf9b44ef36da224fbd6f0a887453372ab846bb3e5dd9c05f484272aa70652ea3fed837e388dbf3354",
+      "tag": "docs-stackline-remark-mdx-v1.0.2"
     }
   ]
 }
