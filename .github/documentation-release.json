@@ -1,0 +1,33 @@
+{
+  "repository": "alexandroit/stackline-remark-mdx",
+  "packages": [
+    {
+      "name": "@stackline/remark-mdx",
+      "path": "readme.md",
+      "version": "1.0.1",
+      "baselineVersion": "1.0.0",
+      "keywords": [
+        "stackline",
+        "npm-package",
+        "remark-mdx",
+        "typescript",
+        "unified",
+        "remark",
+        "remark-plugin",
+        "plugin",
+        "mdast",
+        "markdown",
+        "jsx",
+        "javascript",
+        "xml",
+        "mdx",
+        "maintenance-fork"
+      ],
+      "homepage": "https://alexandro.net/docs/vanilla/remark-mdx/",
+      "baselineTarball": "https://registry.npmjs.org/@stackline/remark-mdx/-/remark-mdx-1.0.0.tgz",
+      "baselineIntegrity": "sha512-3ipQ3zjy6F4KBwC8KCjXwmhh0Uitmoc+pbVTJ+yryAu18iKAfG1hw0LZjS1b6q73lE87f66vkPB2+AljTgcagg==",
+      "expectedSha512": "4251db472003548886fe097843d0ce029f025477e6584df00343fab801d6feb57d9d22443bbabbd1ead480caa686539642cc79ef51a31e04dd3eb21dc8eed612",
+      "tag": "docs-stackline-remark-mdx-v1.0.1"
+    }
+  ]
+}
