@@ -1,32 +1,56 @@
 # @stackline/remark-mdx
 
-Independent maintenance fork of `remark-mdx@2.0.0`, preserving its API and published type declarations.
+> remark plugin to support MDX syntax.
 
-```sh
+[![npm version](https://img.shields.io/npm/v/@stackline/remark-mdx.svg?style=flat-square)](https://www.npmjs.com/package/@stackline/remark-mdx)
+[![license](https://img.shields.io/npm/l/@stackline/remark-mdx.svg?style=flat-square)](https://github.com/alexandroit/stackline-remark-mdx)
+[![GitHub repository](https://img.shields.io/badge/GitHub-alexandroit%2Fstackline-remark-mdx-181717?style=flat-square&logo=github)](https://github.com/alexandroit/stackline-remark-mdx)
+[![Docs](https://img.shields.io/badge/docs-alexandro.net-0f766e?style=flat-square)](https://alexandro.net/docs/vanilla/remark-mdx/)
+[![Reddit community](https://img.shields.io/badge/community-r%2FStackline-ff4500?style=flat-square&logo=reddit&logoColor=white)](https://www.reddit.com/r/Stackline/)
+
+**[Documentation](https://alexandro.net/docs/vanilla/remark-mdx/)** | **[npm](https://www.npmjs.com/package/@stackline/remark-mdx)** | **[Issues](https://github.com/alexandroit/stackline-remark-mdx/issues)** | **[Repository](https://github.com/alexandroit/stackline-remark-mdx)**
+
+**Current package version:** `1.0.1`
+
+---
+
+## Why this package?
+
+`@stackline/remark-mdx` is the Stackline-maintained distribution of `remark-mdx@2.0.0`. It is an independent continuation of [remark-mdx](https://github.com/mdx-js/mdx); original authors and licenses remain credited below.
+
+## Compatibility
+
+| Item | Value |
+| :--- | :--- |
+| Package | `@stackline/remark-mdx@1.0.1` |
+| API target | `remark-mdx@2.0.0` |
+| Supported Node.js | `See supported framework requirements` |
+| License | `MIT` |
+| Module type | `module` |
+| Main entry | `index.js` |
+| Types | `index.d.ts` |
+| Runtime dependencies | `mdast-util-mdx, micromark-extension-mdxjs, micromark-extension-mdx-expression` |
+
+## Installation
+
+```bash
 npm install @stackline/remark-mdx
-# Keep existing imports:
-npm install remark-mdx@npm:@stackline/remark-mdx@1.0.0
 ```
 
-[Stackline](https://alexandro.net/) · [Issues](https://github.com/alexandroit/stackline-remark-mdx/issues) · [Community](https://www.reddit.com/r/Stackline/)
+Preserve existing imports and plugin resolution with an npm alias:
 
-See [UPSTREAM.md](UPSTREAM.md) for source identity and issue review, and [CHANGELOG.md](CHANGELOG.md) for maintenance changes. Functional tests also run against the final npm tarball; releases are published from GitHub Actions with provenance.
+```bash
+npm install remark-mdx@npm:@stackline/remark-mdx
+```
 
-## Upstream documentation
+## Usage and API reference
 
-# remark-mdx
+### remark-mdx
 
-[![Build][build-badge]][build]
-[![Coverage][coverage-badge]][coverage]
-[![Downloads][downloads-badge]][downloads]
-[![Size][size-badge]][size]
-[![Sponsors][sponsors-badge]][collective]
-[![Backers][backers-badge]][collective]
-[![Chat][chat-badge]][chat]
 
 remark plugin to support the MDX syntax (JSX, expressions, import/exports).
 
-<!-- more -->
+
 
 ## Contents
 
@@ -80,20 +104,20 @@ Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
 [npm][]:
 
 ```sh
-npm install remark-mdx
+npm install @stackline/remark-mdx
 ```
 
 [yarn][]:
 
 ```sh
-yarn add remark-mdx
+yarn add @stackline/remark-mdx
 ```
 
 ## Use
 
 ```js
 import {remark} from 'remark'
-import remarkMdx from 'remark-mdx'
+import remarkMdx from '@stackline/remark-mdx'
 
 const file = remark()
   .use(remarkMdx)
@@ -157,7 +181,7 @@ somewhere in your types, as that registers the new node types in the tree.
 
 ```js
 /**
- * @typedef {import('remark-mdx')}
+ * @typedef {import('@stackline/remark-mdx')}
  */
 
 import {visit} from 'unist-util-visit'
@@ -175,7 +199,7 @@ export default function myRemarkPlugin() => {
 Alternatively, in TypeScript, do:
 
 ```ts
-/// <reference types="remark-mdx" />
+/// <reference types="@stackline/remark-mdx" />
 
 import type {Root} from '@types/mdast'
 import {visit} from 'unist-util-visit'
@@ -255,3 +279,23 @@ abide by its terms.
 [security]: https://mdxjs.com/getting-started/#security
 
 [typescript]: https://www.typescriptlang.org
+
+## Credits and original authors
+
+- Original project: [remark-mdx](https://github.com/mdx-js/mdx).
+- Titus Wormer.
+- Christian Murphy.
+- Copyright (c) 2020 Titus Wormer <tituswormer@gmail.com>.
+- Stackline maintenance: [Alexandro Paixao Marques](https://www.linkedin.com/in/aleinfo/) and [Stackline contributors](https://github.com/alexandroit).
+
+Original copyright, license notices and contributor acknowledgements remain part of this distribution. Stackline maintenance does not replace authorship of the original work.
+
+## Community and Links
+
+- [Stackline website](https://alexandro.net/)
+- [GitHub projects](https://github.com/alexandroit)
+- [npm packages](https://www.npmjs.com/~alex360qc)
+- [Reddit community — r/Stackline](https://www.reddit.com/r/Stackline/)
+- [Maintainer LinkedIn](https://www.linkedin.com/in/aleinfo/)
+
+Use this repository's issue tracker for reproducible bugs and feature requests. Join r/Stackline for examples, usage questions and release discussions.

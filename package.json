@@ -24,8 +24,12 @@
     "test:package": "node scripts/test-package.mjs",
     "test:types": "tsc --ignoreConfig --noEmit --module NodeNext --moduleResolution NodeNext --target ES2022 --strict test/stackline-types.mts"
   },
-  "homepage": "https://github.com/alexandroit/stackline-remark-mdx#readme",
+  "homepage": "https://alexandro.net/docs/vanilla/remark-mdx/",
   "keywords": [
+    "stackline",
+    "npm-package",
+    "remark-mdx",
+    "typescript",
     "unified",
     "remark",
     "remark-plugin",
@@ -36,7 +40,6 @@
     "javascript",
     "xml",
     "mdx",
-    "stackline",
     "maintenance-fork"
   ],
   "repository": {
@@ -79,7 +82,7 @@
     "typescript": "7.0.2",
     "@types/node": "24.12.2"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publishConfig": {
     "access": "public"
   },
