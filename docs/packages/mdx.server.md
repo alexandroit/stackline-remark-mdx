@@ -1,1 +1,0 @@
-../../packages/mdx/readme.md

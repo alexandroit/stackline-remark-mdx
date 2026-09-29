@@ -1,1 +1,0 @@
-../../packages/loader/readme.md

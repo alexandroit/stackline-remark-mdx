@@ -1,133 +1,210 @@
-<p align="center">
-  <a href="https://mdxjs.com">
-    <img alt="MDX" src="https://mdx-logo.now.sh" width="60" />
-  </a>
-</p>
+# @stackline/remark-mdx
 
-# Markdown for the component era
+Independent maintenance fork of `remark-mdx@2.0.0`, preserving its API and published type declarations.
+
+```sh
+npm install @stackline/remark-mdx
+# Keep existing imports:
+npm install remark-mdx@npm:@stackline/remark-mdx@1.0.0
+```
+
+[Stackline](https://alexandro.net/) · [Issues](https://github.com/alexandroit/stackline-remark-mdx/issues) · [Community](https://www.reddit.com/r/Stackline/)
+
+See [UPSTREAM.md](UPSTREAM.md) for source identity and issue review, and [CHANGELOG.md](CHANGELOG.md) for maintenance changes. Functional tests also run against the final npm tarball; releases are published from GitHub Actions with provenance.
+
+## Upstream documentation
+
+# remark-mdx
 
 [![Build][build-badge]][build]
 [![Coverage][coverage-badge]][coverage]
+[![Downloads][downloads-badge]][downloads]
+[![Size][size-badge]][size]
 [![Sponsors][sponsors-badge]][collective]
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-[MDX][website] is an authorable format that lets you seamlessly write JSX in
-your markdown documents.
-You can import components, such as interactive charts or alerts, and embed them
-within your content.
-This makes writing long-form content with components a blast.
-🚀
+remark plugin to support the MDX syntax (JSX, expressions, import/exports).
 
-```mdx
-import {Chart} from './snowfall.js'
-export const year = 2018
+<!-- more -->
 
-# Last year’s snowfall
+## Contents
 
-In {year}, the snowfall was above average.
-It was followed by a warm spring which caused
-flood conditions in many of the nearby rivers.
-
-<Chart year={year} color="#fcb32c" />
-```
-
-See [§ What is MDX](https://mdxjs.com/docs/what-is-mdx/) for more info on the
-format.
-See [§ Playground](https://mdxjs.com/playground/) to try it out.
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`unified().use(remarkMdx)`](#unifieduseremarkmdx)
+*   [Syntax](#syntax)
+*   [Syntax tree](#syntax-tree)
+*   [Types](#types)
+*   [Security](#security)
+*   [Contribute](#contribute)
+*   [License](#license)
 
 ## What is this?
 
-This GitHub repository contains several packages for compiling the MDX format to
-JavaScript, integrating with bundlers such as webpack and Rollup, and for using
-it with frameworks such as React, Preact, and Vue.
+This package is a remark plugin to support the MDX syntax.
 
-See [§ Getting started](https://mdxjs.com/getting-started/) for how to
-integrate MDX into your project.
+## When should I use this?
+
+This plugin is useful if you’re dealing with the MDX syntax and integrating
+with remark, rehype, and the rest of unified.
+Some example use cases are when you want to lint the syntax or compile it to
+something other that JavaScript.
+
+**remark** is an AST (abstract syntax tree) based transform project.
+The layer under remark is called mdast, which is just the syntax tree without
+the convention on how to transform.
+mdast is useful when transforming to other formats.
+Another layer underneath is micromark, which is just the parser and has support
+for concrete tokens.
+micromark is useful for linting and formatting.
+`remark-mdx` is a small wrapper to integrate all of these.
+Its parts can be used separately.
+
+Typically though, you’d want to move a layer up: `@mdx-js/mdx`.
+That package is the core compiler for turning MDX into JavaScript which
+gives you the most control.
+Or even higher: if you’re using a bundler (webpack, Rollup, esbuild), or a site
+builder (Gatsby, Next.js) or build system (Vite, WMR) which comes with a
+bundler, you’re better off using an integration: see
+[§ Integrations][integrations].
+
+## Install
+
+This package is [ESM only][esm]:
+Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
+
+[npm][]:
+
+```sh
+npm install remark-mdx
+```
+
+[yarn][]:
+
+```sh
+yarn add remark-mdx
+```
+
+## Use
+
+```js
+import {remark} from 'remark'
+import remarkMdx from 'remark-mdx'
+
+const file = remark()
+  .use(remarkMdx)
+  .processSync('import a from "b"\n\na <b /> c {1 + 1} d')
+
+console.log(String(file))
+```
+
+Yields:
+
+```mdx
+import a from "b"
+
+a <b/> c {1 + 1} d
+```
+
+## API
+
+This package exports no identifiers.
+The default export is `remarkMdx`.
+
+### `unified().use(remarkMdx)`
+
+Configures remark so that it can parse and serialize MDX (JSX, expressions,
+import/exports).
+It doesn’t do anything with the syntax: you can
+[create your own plugin][create-plugin] to transform them.
+
+## Syntax
+
+This plugin applies several micromark extensions to parse the syntax.
+See their readmes for parse details:
+
+*   [`micromark-extension-mdx-expression`](https://github.com/micromark/micromark-extension-mdx-expression#syntax)
+    — expressions (`{1 + 1}`)
+*   [`micromark-extension-mdx-jsx`](https://github.com/micromark/micromark-extension-mdx-jsx#syntax)
+    — JSX (`<div />`)
+*   [`micromark-extension-mdxjs-esm`](https://github.com/micromark/micromark-extension-mdxjs-esm#syntax)
+    — ESM (`export x from 'y'`)
+*   [`micromark-extension-mdx-md`](https://github.com/micromark/micromark-extension-mdx-md#mdxmd)
+    — Turn off HTML, autolinks, and indented code
+
+## Syntax tree
+
+This plugin applies several mdast utilities to build and serialize the AST.
+See their readmes for the node types supported in the tree:
+
+*   [`mdast-util-mdx-expression`](https://github.com/syntax-tree/mdast-util-mdx-expression#syntax-tree)
+    — expressions (`{1 + 1}`)
+*   [`mdast-util-mdx-jsx`](https://github.com/syntax-tree/mdast-util-mdx-jsx#syntax-tree)
+    — JSX (`<div />`)
+*   [`mdast-util-mdxjs-esm`](https://github.com/syntax-tree/mdast-util-mdxjs-esm#syntax-tree)
+    — ESM (`export x from 'y'`)
+
+## Types
+
+This package is fully typed with [TypeScript][].
+
+If you’re working with the syntax tree, make sure to import this plugin
+somewhere in your types, as that registers the new node types in the tree.
+
+```js
+/**
+ * @typedef {import('remark-mdx')}
+ */
+
+import {visit} from 'unist-util-visit'
+
+export default function myRemarkPlugin() => {
+  /** @param {import('@types/mdast').Root} tree */
+  return (tree) => {
+    visit(tree, (node) => {
+      // `node` can now be one of the nodes for JSX, expressions, or ESM.
+    })
+  }
+}
+```
+
+Alternatively, in TypeScript, do:
+
+```ts
+/// <reference types="remark-mdx" />
+
+import type {Root} from '@types/mdast'
+import {visit} from 'unist-util-visit'
+
+export default function myRemarkPlugin() => {
+  return (tree: Root) => {
+    visit(tree, (node) => {
+      // `node` can now be one of the nodes for JSX, expressions, or ESM.
+    })
+  }
+}
+```
 
 ## Security
 
-See [§ Security][security] on our site for information.
+See [§ Security][security] on our website for information.
 
 ## Contribute
 
-See [§ Contribute][contribute] on our site for ways to get started.
+See [§ Contribute][contribute] on our website for ways to get started.
 See [§ Support][support] for ways to get help.
 
 This project has a [code of conduct][coc].
 By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
-## Sponsor
-
-See [§ Sponsor][sponsor] on our site for how to help financially.
-
-<table>
-<tr valign="middle">
-<td width="20%" align="center" rowspan="2" colspan="2">
-  <a href="https://vercel.com">Vercel</a><br><br>
-  <a href="https://vercel.com"><img src="https://avatars1.githubusercontent.com/u/14985020?s=256&v=4" width="128"></a>
-</td>
-<td width="20%" align="center" rowspan="2" colspan="2">
-  <a href="https://motif.land">Motif</a><br><br>
-  <a href="https://motif.land"><img src="https://avatars1.githubusercontent.com/u/74457950?s=256&v=4" width="128"></a>
-</td>
-<td width="20%" align="center" rowspan="2" colspan="2">
-  <a href="https://www.hashicorp.com">HashiCorp</a><br><br>
-  <a href="https://www.hashicorp.com"><img src="https://avatars1.githubusercontent.com/u/761456?s=256&v=4" width="128"></a>
-</td>
-<td width="20%" align="center" rowspan="2" colspan="2">
-  <a href="https://www.gitbook.com">GitBook</a><br><br>
-  <a href="https://www.gitbook.com"><img src="https://avatars1.githubusercontent.com/u/7111340?s=256&v=4" width="128"></a>
-</td>
-<td width="20%" align="center" rowspan="2" colspan="2">
-  <a href="https://www.gatsbyjs.org">Gatsby</a><br><br>
-  <a href="https://www.gatsbyjs.org"><img src="https://avatars1.githubusercontent.com/u/12551863?s=256&v=4" width="128"></a>
-</td>
-</tr>
-<tr valign="middle"></tr>
-<tr valign="middle">
-<td width="20%" align="center" rowspan="2" colspan="2">
-  <a href="https://www.netlify.com">Netlify</a><br><br>
-  <!--OC has a sharper image-->
-  <a href="https://www.netlify.com"><img src="https://images.opencollective.com/netlify/4087de2/logo/256.png" width="128"></a>
-</td>
-<td width="10%" align="center">
-  <a href="https://www.coinbase.com">Coinbase</a><br><br>
-  <a href="https://www.coinbase.com"><img src="https://avatars1.githubusercontent.com/u/1885080?s=256&v=4" width="64"></a>
-</td>
-<td width="10%" align="center">
-  <a href="https://themeisle.com">ThemeIsle</a><br><br>
-  <a href="https://themeisle.com"><img src="https://avatars1.githubusercontent.com/u/58979018?s=128&v=4" width="64"></a>
-</td>
-<td width="10%" align="center">
-  <a href="https://expo.io">Expo</a><br><br>
-  <a href="https://expo.io"><img src="https://avatars1.githubusercontent.com/u/12504344?s=128&v=4" width="64"></a>
-</td>
-<td width="10%" align="center">
-  <a href="https://boostnote.io">Boost Note</a><br><br>
-  <a href="https://boostnote.io"><img src="https://images.opencollective.com/boosthub/6318083/logo/128.png" width="64"></a>
-</td>
-<td width="10%" align="center">
-  <a href="https://www.holloway.com">Holloway</a><br><br>
-  <a href="https://www.holloway.com"><img src="https://avatars1.githubusercontent.com/u/35904294?s=128&v=4" width="64"></a>
-</td>
-<td width="10%"></td>
-<td width="10%"></td>
-<td width="10%"></td>
-</tr>
-<tr valign="middle">
-<td width="100%" align="center" colspan="8">
-  <br>
-  <a href="https://opencollective.com/unified"><strong>You?</strong></a>
-  <br><br>
-</td>
-</tr>
-</table>
-
 ## License
 
-[MIT][] © Compositor and [Vercel][]
+[MIT][] © [Titus Wormer][author]
 
 [build-badge]: https://github.com/mdx-js/mdx/workflows/main/badge.svg
 
@@ -136,6 +213,14 @@ See [§ Sponsor][sponsor] on our site for how to help financially.
 [coverage-badge]: https://img.shields.io/codecov/c/github/mdx-js/mdx/main.svg
 
 [coverage]: https://codecov.io/github/mdx-js/mdx
+
+[downloads-badge]: https://img.shields.io/npm/dm/remark-mdx.svg
+
+[downloads]: https://www.npmjs.com/package/remark-mdx
+
+[size-badge]: https://img.shields.io/bundlephobia/minzip/remark-mdx.svg
+
+[size]: https://bundlephobia.com/result?p=remark-mdx
 
 [sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
 
@@ -147,18 +232,26 @@ See [§ Sponsor][sponsor] on our site for how to help financially.
 
 [chat]: https://github.com/mdx-js/mdx/discussions
 
-[security]: https://mdxjs.com/getting-started/#security
+[npm]: https://docs.npmjs.com/cli/install
+
+[yarn]: https://classic.yarnpkg.com/docs/cli/add/
 
 [contribute]: https://mdxjs.com/community/contribute/
 
 [support]: https://mdxjs.com/community/support/
 
-[sponsor]: https://mdxjs.com/community/sponsor/
-
 [coc]: https://github.com/mdx-js/.github/blob/main/code-of-conduct.md
 
-[website]: https://mdxjs.com
+[mit]: https://github.com/mdx-js/mdx/blob/main/packages/remark-mdx/license
 
-[mit]: license
+[author]: https://wooorm.com
 
-[vercel]: https://vercel.com
+[create-plugin]: https://unifiedjs.com/learn/guide/create-a-plugin/
+
+[integrations]: https://mdxjs.com/getting-started/#integrations
+
+[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[security]: https://mdxjs.com/getting-started/#security
+
+[typescript]: https://www.typescriptlang.org

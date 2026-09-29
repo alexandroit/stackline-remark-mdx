@@ -1,0 +1,29 @@
+{
+  "upstream": "remark-mdx",
+  "fork": "@stackline/remark-mdx",
+  "repository": "alexandroit/stackline-remark-mdx",
+  "upstreamRepository": "mdx-js/mdx",
+  "upstreamVersion": "2.0.0",
+  "sourceCommit": "490da9f41e29570d020d3339a842627d6c849e37",
+  "upstreamIntegrity": "sha512-TDnjSv77Oynf+K1deGWZPKSwh3/9hykVAxVm9enAw6BmicCGklREET8s19KYnjGsNPms0pNDJLmp+bnHDVItAQ==",
+  "head": "bf7deab69996449cb99c2217dff75e65855eb2c1",
+  "status": "source-ready",
+  "registryGitHeadWasStale": "bf7deab69996449cb99c2217dff75e65855eb2c1",
+  "sourceSelection": "upstream tag 2.0.0; published gitHead points to unrelated 2020 prerelease",
+  "files": {
+    "license": "536804b3adbff17dbbb9ed0d2bf9655b78f07640278581e37e3d7475282d5e61",
+    "index.js": "75d0a887dd08c8739636f873382d4d3966d2b3fdafddf69a120e397efcb80b58",
+    "package.json": "6cf2122b4aab446b05ba804c653a36893ee10716ab8647a88490400879f07f12",
+    "readme.md": "feb9ab8edd7f5c384e547d8f555775204e6f55997fb66e5ac6bd97d70e26718c",
+    "index.d.ts": "7ba85abc439e1b09d67e31191f680637e7acfb2857d0bd7cd25d2ed0f8e31f4a"
+  },
+  "allowedRuntimeChanges": [
+    "index.js",
+    "index.d.ts"
+  ],
+  "testCommand": "uvu test \"\\.jsx?$\"",
+  "strategy": "Published upstream files, including generated declarations, are preserved and checked against SHA-256. Functional tests run against source and the extracted final package. Changes to published runtime files require an explicit reviewed allowlist.",
+  "typeFixes": [
+    "Import the existing Options alias from its public defining package; micromark-extension-mdxjs@1.0.1 declarations incorrectly reference a nested node_modules path. Runtime code is unchanged."
+  ]
+}

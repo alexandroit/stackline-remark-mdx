@@ -1,1 +1,0 @@
-../../packages/rollup/readme.md

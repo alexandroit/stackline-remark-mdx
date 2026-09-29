@@ -1,1 +1,0 @@
-../../packages/preact/readme.md
